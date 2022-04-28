@@ -85,7 +85,7 @@ The business logic that gives the agent "personality". Growr Agent SDK is used f
 
 #### PGAs by persona
 
-##### PGA Issuer 
+##### PGA Issuer boilerplate
 - Growr Agent SDK
 	- Identity
 	- CreateRequest
@@ -94,7 +94,7 @@ The business logic that gives the agent "personality". Growr Agent SDK is used f
 - Data storage for VC request process
 - Connection with trust registries to validate that SSFI Holder is not banned from service - _TBA_
 
-##### PGA Risk Assessor
+##### PGA Risk Assessor boilerplate
 - Growr Agent SDK
 	- Identity
 	- Web3
@@ -104,10 +104,16 @@ The business logic that gives the agent "personality". Growr Agent SDK is used f
 
 ## Architecture diagram
 
-Currently the communication between Growr SSFI Agent dApp and the GAG is by GraphQL API. GraphQL allows for Schema discovery from client perspective and Schema Stitching from Server perspective to achieve flexibility and decentralization at some stage.
+Currently the communication between GSA dApp and the GAG is by GraphQL API. GraphQL allows for Schema discovery from client perspective and Schema Stitching from Server perspective to achieve flexibility and decentralization at some stage.
 For future iterations IGA will be added, the GA SDK will be used in the GSA dApp. Also all communication between agents should be implemented in message pattern over DIDComm or other encrypted and secured channels. Schema repository and Trusted PGA registries should be implement as Growr Trust framework services. Core protocol will be extended further as well. Check [Growr Roadmap]() for details for different elements.
 
 ![Architecture](growr-agent-framework.svg)
+# TODO
+
+Split in two diagrams 
+Synchronize with roadmap
+Add schemas and config to current Growr Agent container
+
 
 ## Growr Agent SDK Specs
 ### External dependencies
