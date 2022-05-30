@@ -14,8 +14,8 @@ All kind of actors that can provide, use or verify SSFI data.
 #### Grower SSFI Agent dApp - GSA dApp or Custodial app - Front End
 A wallet-like app that is operated by SSFI Holder and is used to build and operate the SSFI, get access to Growr services operated by different PGAs, get access to fair loans on Growr and to financial health building tools. (Peseta/Demo-SSFI-Agent). Local storage is used to store VCs and RSK DataVault for backup.
 
-#### Public Growr Agent  - PGA
-Entities that have coherent API with the Growr API for one of the roles - Issuer, Verifier, Risk Assessor. Their API is acknowledged, discoverable and accessible via the Growr Agent Gateway (GAG). They operate with SSFI data of the Holder. The PGA can have different Personas.
+#### Public Growr Agent - PGA
+Entities that have coherent API with the Growr API for one of the roles - Issuer, Verifier, Risk Assessor, etc. All those are build with the Growr Agent SDK. Their API is acknowledged, discoverable and accessible via the Growr Agent Gateway (GAG). They operate with SSFI data of the Holder. The PGA can have different Personas.
 
 ##### PGA Issuer
 Issues credentials based on the Holder's data from different 3rd party sources.
@@ -30,23 +30,26 @@ This kind of agents are entitled by SSFI Holders (GSA dApp users) and are used t
 
 ### Growr Agent Gateway - GAG
 
-A single API that enables access to VC Schema repository, all Public Growr Agent Personas (PGAs) and any reporting or event functionalities of Growr. Communication should be :
+A thin discovery service that is creating dynamic schema. Any Distributor can deploy a GAG and setup broker list for the IPs of the nodes of the PGAs that would be included in the Distributor's network. In that way, a Distributor can have his own App and add to the GAG only Issuers and Risk Assessors that he would like to use for his customer base.
+
+Communication should be :
 - GraphQL schema
 	-  "stitched" schema - available through single endpoint - Different PGAs must have different names of queries/mutations/subscriptions. Maybe organized in Domains.
 	OR
 	-  single unified API with pathfinder functionality, based on PGA DID and/or VC types, pond addresses of those that the PGA is assigned to, etc.
 
 This will allow service discovery using dynamic schema that won't require update at the user app for accessing new PGAs. as well as CRUD over request/response model and subscriptions for messaging or other event driven communication.
-The GAG should be used by Growr Individual Agents and SSFI Agent/Wallets to collect and present VCs by Issuers and Risk Assessors, issue endorsement VCs,  
+The GAG should be used by Growr Individual Agents and SSFI Agent/Wallets to collect and present VCs by Issuers and Risk Assessors, issue endorsement VCs.
 
 ### Schema repository & Trusted PGA and Core Protocol Registries
 _schemas currently are in GitHub repository are included in Growr Agent SDK  as submodule_
 _Trusted registries and Pond factories currently are in Environmental variables_
-- GraphQL API for CRU operations with schemas available for acknowledged PGAs
+- GraphQL API for CRU operations with schemas available for acknowledged PGAs (Schemas s)
 - Schema types registry of DID addresses and URIs of PGAs that operate with those schemas. (Issuers and Risk Assessors)
-- Dynamic config loading for trusted protocol registries 
+- Dynamic config loading for trusted protocol registries
 - DID Authorization of the API access*
-
+	All registries, since they should be public, will operate on chain, and the schema hosting is currently in Github, but they should be stored on decentralysed storage (IPFS or some other service)
+ 
 
 ## Building blocks
 
@@ -68,8 +71,8 @@ Common SDK library that is used to enable all DID and VC related operations in t
 	- Decentralized Storage (login, store, retrieve) related functions
 	- Communication with other Agents
 		- * GraphQL + subscriptions 
-		- ? message queue or pub/sub
-		- ! DIDComm
+		- Moleculer mesh over TCP will be used for communication on this Iteration of the framework
+		- DIDComm will be added on the following iteration that will provide further decentralized model.
 
 Should create and return new Agent which has identity, can issue and verify VCs, can access Ponds and Trust registries.
 		
@@ -105,22 +108,28 @@ The business logic that gives the agent "personality". Growr Agent SDK is used f
 ## Architecture diagram
 
 Currently the communication between GSA dApp and the GAG is by GraphQL API. GraphQL allows for Schema discovery from client perspective and Schema Stitching from Server perspective to achieve flexibility and decentralization at some stage.
-For future iterations IGA will be added, the GA SDK will be used in the GSA dApp. Also all communication between agents should be implemented in message pattern over DIDComm or other encrypted and secured channels. Schema repository and Trusted PGA registries should be implement as Growr Trust framework services. Core protocol will be extended further as well. Check [Growr Roadmap]() for details for different elements.
+For future iterations IGA will be added, the GA SDK will be used in the GSA dApp. Also all communication between agents should be implemented in message pattern over DIDComm or other encrypted and secured channels. Schema repository and Trusted PGA registries should be implement as Growr Trust framework services. Core protocol will be extended further as well.
 
-![Architecture](growr-agent-framework.svg)
-# TODO
+### Mid term non-custodial architecture
 
-Split in two diagrams 
-Synchronize with roadmap
-Add schemas and config to current Growr Agent container
+[diagram](./diagrams/growr-agent-framework-mid-stage-non-custodial.drawio.svg)
 
 
+### Mid term custodial architecture
+
+_TBA_
+
+### Fully decentralised architecture
+
+[diagram](./diagrams/growr-agent-framework-fully-decentralised.drawio.svg)
 ## Growr Agent SDK Specs
 ### External dependencies
 * [rif-identity](https://github.com/rsksmart/rif-identity.js)
 * @rsksmart/ethr-did
 *  _TBA_
 ### SSFI Function interface
+*  _TBA_
+
 #### DID function interface
 _@rsksmart/ethr-did wrapper_
 
